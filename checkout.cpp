@@ -22,7 +22,6 @@ void printMenu() {
     cout << "Please enter a choice: ";
 }
 
-// You are not obligated to use these function declarations - they're just given as examples
 void readBooks(vector<Book*> &myBooks) {
     ifstream inFile;
     int idNum;
@@ -419,6 +418,20 @@ void updateFiles(vector<Book*> &myBooks, vector<Person*> &myCardHolders) {
   outFile.close();
 }
 
+void deleteVectors(vector<Book*> &myBooks, vector<Person*> &myCardHolders) {
+  for(int i = 0; i < myBooks.size(); i++)
+  {
+    delete myBooks.at(i);
+    myBooks.at(i) = nullptr;
+  }
+
+  for(int j = 0; j < myCardHolders.size(); j++)
+  {
+    delete myCardHolders.at(j);
+    myCardHolders.at(j) = nullptr;
+  }
+}
+
 int main()
 {
     vector<Book*> myBooks;
@@ -432,8 +445,6 @@ int main()
     int choice;
     do
     {
-        // If you use cin anywhere, don't forget that you have to handle the <ENTER> key that
-        // the user pressed when entering a menu option. This is still in the input stream.
         printMenu();
         cin >> choice;
         switch(choice)
@@ -466,7 +477,6 @@ int main()
             case 6:
                 // Open new library card
                 nextID = openCard(myCardHolders, nextID);
-
                 break;
 
             case 7:
@@ -477,6 +487,7 @@ int main()
             case 8:
                 // Must update records in files here before exiting the program
                 updateFiles(myBooks, myCardHolders);
+                deleteVectors(myBooks, myCardHolders);
                 break;
 
             default:
